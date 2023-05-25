@@ -8,10 +8,14 @@ English | [中文](README_zh.md)
 This project is for study purposes only, if you just want claude-in-slack's API, slack_sdk is a pretty good option.
 
 ## Structure
-图片
+**This graph may not be professional but i hope it makes it much easier for you to understand the code**
+![架构_英文](https://github.com/ogios/claude-in-slack-web-api/assets/96933655/e31c33a8-8bb4-4fe2-802d-1c6008681cc0)
+
 
 ## Login for the first time
-图片
+**This graph may not be professional but i hope it makes it much easier for you to understand the code**
+![流程_英文](https://github.com/ogios/claude-in-slack-web-api/assets/96933655/8a346be2-eeb8-4d3d-a165-73890073530f)
+
 
 ## Saved login status
 Every time after a successful login, the cookies, api-token, user_id, team_id will be saved into a json file named by your email.
