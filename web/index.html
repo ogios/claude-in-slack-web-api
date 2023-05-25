@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta charset="utf-8">
+    <title>Claude in slack web api</title>
+    <style>
+        body {
+            margin: auto;
+            width: 80%;
+        }
+
+        ul li {
+            display: flex;
+
+        }
+        .left img {
+            /*display: block;*/
+            width: 50px;
+            height: 50px;
+        }
+        .left {
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            /*border-right: 1px solid black;*/
+            text-align: center;
+        }
+
+        .right {
+            flex: 5;
+            width: 200px;
+            word-wrap: break-word;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            font-size: small;
+        }
+
+
+        #chatlog {
+            width: 75vw;
+            height: 60vh;
+            overflow: auto;
+            list-style: none;
+            padding: 0;
+        }
+        #message {
+            width: 75vw;
+        }
+        ul li {
+            /*border: 1px solid black;*/
+            margin-bottom: 10px;
+        }
+
+
+    </style>
+    <script src="./js/jquery-3.6.4.min.js"></script>
+    <script src="./js/jquery.cookie.min.js"></script>
+</head>
+<body>
+    <h1>Claude in slack web api</h1>
+    <ul id="chatlog">
+
+    </ul>
+    <form id="chatform" action="">
+        <input id="message" autocomplete="off" /><button>发送</button>
+    </form>
+
+    <button type="button" id="login">登录</button>
+    <script src="js/http_login.js">
+    </script>
+</body>
+</html>

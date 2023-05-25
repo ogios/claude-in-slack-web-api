@@ -1,0 +1,17 @@
+# dirs
+/.idea/
+/gpt/
+/抓包/
+/server/env/
+/server/TestArea/
+/server/__pycache__/
+
+
+# files
+/claude_test.zip
+/gpt.zip
+*.json
+/server/claude(slack_sdk).py
+/server/xoxc请求测试.py
+/server/test.json
+/server/Untitled-2.py

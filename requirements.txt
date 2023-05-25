@@ -1,0 +1,3 @@
+websocket_server
+requests
+fastapi
