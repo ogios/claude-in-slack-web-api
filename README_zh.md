@@ -5,10 +5,16 @@
 这个项目仅以学习为目的，如果有使用claude的需求可以直接使用slack_sdk连接claude app
 
 ## 项目结构
-图片
+**这张图画的可能并不专业，但我希望它可以帮助你更好的了解我写的代码**
+![架构_中文](https://github.com/ogios/claude-in-slack-web-api/assets/96933655/a86a0dce-4f0a-46d5-91f1-4666252ce4f0)
 
-## 第一次登录
-图片
+
+
+## 第一次登录与对话流程
+**这张图画的可能并不专业，但我希望它可以帮助你更好的了解我写的代码**
+![流程_中文](https://github.com/ogios/claude-in-slack-web-api/assets/96933655/151e92ca-4035-4c17-80f0-55d26b859d53)
+
+
 
 ## 保存登录状态
 每次登陆成功之后，cookies、api-token、user_id、team_id这些信息会被保存在json文件中，文件名为邮箱名
