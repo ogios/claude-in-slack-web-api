@@ -5,7 +5,8 @@ English | [中文](README_zh.md)
 > Recently I found that claude can not be installed into slack anymore due to high demand.
 > Maybe releasing this script now is a bit late.
 
-This project is for study purposes only, if you just want claude-in-slack's API, slack_sdk is a pretty good option.
+
+This project is for study purposes only, if you just want claude-in-slack's API, then slack_sdk would be a pretty good option.
 
 ## Structure
 **This graph may not be professional but i hope it makes it much easier for you to understand the code**
@@ -31,12 +32,12 @@ And there's a web server version i made:
 ## Chat
 
 ### Create a ClaudeApp
-After a ClaudeApp is created using `createApp()`, it creates a WebSocketServer and returns a websocket url and a ClaudeApp which hasn't been connected to the slack.
+After a ClaudeApp is created using `createApp()`, it will setup a WebSocketServer and returns the websocket url and a ClaudeApp which hasn't been connected to the slack.
 
 ### Login or load login status
-For now, it only supports email login, which requires a verification code, the way to login by password may be supported soon.
+For now, it only supports email login, which requires a verification code, login by password may be supported soon.
 
-For email logins, each login process will take place in XOXD.py:
+For email login, each login process will take place in XOXD.py:
 ```python
 xoxd.Login_init()
 xoxd.Login_sendCode(code)
@@ -50,17 +51,17 @@ xoxd.Login_getDAndSave()
 After this, the login status will be saved.
 
 ### Match channel and connect to wss
-use `connect()` in ClaudeApp, this will automatically match the channel that claude is in and connect to the wss that slack provides
+use `connect()` in ClaudeApp, this will automatically match the channel which claude is in and connect to the wss that slack provides
 
 ### chat
-use `postMessage` to send a message to claude, and every chat message will be received through wss and then parse and forward to WebSocketServer.
+use `postMessage` to send a message to claude. Every chat message will be received through wss and then be parsed and forward to WebSocketServer.
 
 ## Execute cmd
-Claude only has one command `/reset`, but i manage to make a function for that just in case it updates some new commands.
+Claude has only one command `/reset`, but i manage to make a function for that just in case it updates some new commands.
 
-To do it, you just have to call the function under the ClaudeApp `execCmd(cmd)`, the command will be sent and if it's "reset", it will be noticed in wss.
+To do it, you just have to call the function under the ClaudeApp `execCmd(cmd)`, if it's "/reset", it will be noticed in wss.
 
 ## Chat Histories
-I got the API but I haven't done anything to it, haven't figured out how to write it. the responses depend on timestamp and fp(i set it to 30), it returns a maximum of 30 messages before the specific timestamp.
+I got the API but I haven't done anything to it, haven't figured out how to write it. the responses depend on timestamp and fp(i set it to 30), it returns a maximum of 30 messages which happens before a specific timestamp.
 
-you can try to do it on your own, the function refers to it is in `ClaudeApp.getHistory()`
+you can try to do it on your own, the function is `ClaudeApp.getHistory()`.
