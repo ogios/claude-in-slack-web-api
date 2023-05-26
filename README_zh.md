@@ -2,6 +2,8 @@
 > 最近发现claude-in-slack不再提供加入到slack里，去官网看了一下原因貌似是太多需求  
 > 现在发出来这个脚本是不是有些太晚了
 
+在我自己的服务器上测试了许多遍之后，暂时没什么问题了，把python3.10的'match'语法也改成了elif，如果使用上还有什么问题，请告知我
+
 这个项目仅以学习为目的，如果有使用claude的需求可以直接使用slack_sdk连接claude app
 
 ## 项目结构
@@ -21,11 +23,26 @@
 使用 `checkEnv()` 方法保存登录状态，使用 `getEnv()` 保存加载。
 
 ## 使用方法
-具体请查看这个文件:  
-[Claude in command line](server/main_cmd.py)
+在config.json文件中设置fastapi server的地址和端口：
+```
+{
+  "HOST": "fastapi的host, 默认 127.0.0.1",
+  "API_PORT": fastapi的端口, 默认 8011,
+  "WEB_PORT": nodejs的端口, 默认 80
+}
+```
+运行下面的命令来运行nodejs server
+```shell
+$ node ./web/index.js
+```
+fastapi:
+```shell
+$ pip3 install -r requirements.txt
+$ python3 ./server/main_fastapi.py
+```
 
-另外一个web server的版本:  
-[Claude in FastAPI](server/main_fastapi.py)
+这是写的另外一个版本，在命令行中提供对话的版本：
+[Claude in command line](server/main_cmd.py)
 
 
 ## 聊天
