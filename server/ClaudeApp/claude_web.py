@@ -60,7 +60,7 @@ def get_free_tcp_port():
 class WSOut:
 	def __init__(self, xoxd: XOXD, email: str, claudeApp, port: int = None):
 		self.IP_PORT: int = port if port != None else getRandomPort()
-		self.IP_ADDR: str = HOST
+		self.IP_ADDR: str = "0.0.0.0"
 		self.email: str = email
 		self.xoxd: XOXD = xoxd
 		self.claudeApp = claudeApp
