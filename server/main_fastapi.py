@@ -194,7 +194,7 @@ async def execCmd(email: str, cmd: str):
 
 if __name__ == "__main__":
 	import uvicorn
-	PATH = os.path.dirname(__file__)
+	PATH = os.path.dirname(os.path.realpath(__file__))
 	with open(PATH + "/../config.json", "r") as f:
 		PORT = json.loads(f.read())["API_PORT"]
 	gc.collect()
