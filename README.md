@@ -5,6 +5,8 @@ English | [中文](README_zh.md)
 > Recently I found that claude can not be installed into slack anymore due to high demand.
 > Maybe releasing this script now is a bit late.
 
+After test it for a few times on my server, i've fixed most of the bugs and convert 'match' to 'elif', it now works just fine.
+please let me know if there's something wrong on your computer.
 
 This project is for study purposes only, if you just want claude-in-slack's API, then slack_sdk would be a pretty good option.
 
@@ -23,11 +25,29 @@ Every time after a successful login, the cookies, api-token, user_id, team_id wi
 use `checkEnv()` to see if it's been saved and use `getEnv()` to load it.
 
 ## Usage
-Please check this for how to use it:  
+
+Setup fastapi and nodejs server's host and port in config.json:
+```
+{
+  "HOST": "fastapi server's host, default to 127.0.0.1",
+  "API_PORT": fastapi server's port, default to 8011,
+  "WEB_PORT": nodejs server's port, default to 80
+}
+```
+and run this to start the nodejs server:
+```shell
+$ node ./web/index.js
+```
+fastapi server:
+```shell
+$ pip3 install -r requirements.txt
+$ python3 ./server/main_fastapi.py
+```
+
+
+Here's another version that provides a command-line usage:  
 [Claude in command line](server/main_cmd.py)
 
-And there's a web server version i made:  
-[Claude in FastAPI](server/main_fastapi.py)
 
 ## Chat
 
