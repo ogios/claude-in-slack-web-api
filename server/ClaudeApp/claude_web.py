@@ -528,7 +528,7 @@ class ClaudeApp:
 		return 1
 	
 	@staticmethod
-	def createApp(email, port=None) -> tuple[str, T]:
+	def createApp(email, port=None):
 		claude = ClaudeApp(email, port)
 		Thread(target=claude.WSOut.startWebsocketServer, daemon=True).start()
 		url = f"ws://{claude.WSOut.IP_ADDR}:{claude.WSOut.IP_PORT}"
