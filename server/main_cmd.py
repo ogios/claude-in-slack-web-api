@@ -25,11 +25,15 @@ def updateMsg(js):
 def on_message(wsapp, data):
 	data = json.loads(data)
 	type = data["type"]
-	match type:
-		case "text":
-			updateMsg(data)
-		case "error":
-			print("error occurred: ", data["msg"])
+	if type == "text":
+		updateMsg(data)
+	elif type == "error":
+		print("error occurred: ", data["msg"])
+	# match type:
+	# 	case "text":
+	# 		updateMsg(data)
+	# 	case "error":
+	# 		print("error occurred: ", data["msg"])
 
 
 # create ClaudeApp and connect to WebSocketServer
@@ -69,18 +73,29 @@ if claude.xoxd.checkEnv():  # check if the account has been logged in before
 if not claude.checkAuth():  # check if the current account has the authorization to send request
 	while 1:
 		option = input("Not Authorized, login? (y/n)").lower()
-		match option:
-			case "y" | "yes":
-				if not login(claude):  # login
-					print("login fatal")
-					sys.exit()
-				else:
-					print("done.")
-					break
-			case "n" | "no":
+		if option == "y" or option == "yes":
+			if not login(claude):  # login
+				print("login fatal")
 				sys.exit()
-			case _:
-				print("only y or n")
+			else:
+				print("done.")
+				break
+		elif option == "n" or option == "no":
+			sys.exit()
+		else:
+			print("only y or n")
+		# match option:
+		# 	case "y" | "yes":
+		# 		if not login(claude):  # login
+		# 			print("login fatal")
+		# 			sys.exit()
+		# 		else:
+		# 			print("done.")
+		# 			break
+		# 	case "n" | "no":
+		# 		sys.exit()
+		# 	case _:
+		# 		print("only y or n")
 claude.connect()  # automatically match the channel which have claude and connect to slack wss when it's done
 while 1:
 	text = input(">>>")

@@ -73,23 +73,40 @@ async def login(type: str, step: str, js: dict):
 		return json.dumps({"ok": False, "msg": "no claude app created in sessions"}, ensure_ascii=False)
 	if type == "email":
 		claude: ClaudeApp = sessions[email]["claude"]
-		match step:
-			case "init":
-				ok = claude.xoxd.Login_init()
-			case "sendCode":
-				if not js.__contains__("code"):
-					return json.dumps({"ok": False, "msg": "No code provided"}, ensure_ascii=False)
-				code = js["code"]
-				ok = claude.xoxd.Login_sendCode(code)
-			case "selectTeam":
-				if not js.__contains__("option"):
-					return json.dumps({"ok": False, "msg": "No option provided"}, ensure_ascii=False)
-				option = js["option"]
-				ok = claude.xoxd.Login_selTeam(option)
-			case "getDAndSave":
-				ok = claude.xoxd.Login_getDAndSave()
-			case _:
-				return json.dumps({"ok": False, "msg": "wrong step"}, ensure_ascii=False)
+		if step == "init":
+			ok = claude.xoxd.Login_init()
+		elif step == "sendCode":
+			if not js.__contains__("code"):
+				return json.dumps({"ok": False, "msg": "No code provided"}, ensure_ascii=False)
+			code = js["code"]
+			ok = claude.xoxd.Login_sendCode(code)
+		elif step == "selectTeam":
+			if not js.__contains__("option"):
+				return json.dumps({"ok": False, "msg": "No option provided"}, ensure_ascii=False)
+			option = js["option"]
+			ok = claude.xoxd.Login_selTeam(option)
+		elif step == "getDAndSave":
+			ok = claude.xoxd.Login_getDAndSave()
+		else:
+			return json.dumps({"ok": False, "msg": "wrong step"}, ensure_ascii=False)
+
+		# match step:
+		# 	case "init":
+		# 		ok = claude.xoxd.Login_init()
+		# 	case "sendCode":
+		# 		if not js.__contains__("code"):
+		# 			return json.dumps({"ok": False, "msg": "No code provided"}, ensure_ascii=False)
+		# 		code = js["code"]
+		# 		ok = claude.xoxd.Login_sendCode(code)
+		# 	case "selectTeam":
+		# 		if not js.__contains__("option"):
+		# 			return json.dumps({"ok": False, "msg": "No option provided"}, ensure_ascii=False)
+		# 		option = js["option"]
+		# 		ok = claude.xoxd.Login_selTeam(option)
+		# 	case "getDAndSave":
+		# 		ok = claude.xoxd.Login_getDAndSave()
+		# 	case _:
+		# 		return json.dumps({"ok": False, "msg": "wrong step"}, ensure_ascii=False)
 		if ok:
 			data = {"ok": True, "next_step": claude.xoxd.next_step}
 			return json.dumps(data, ensure_ascii=False)

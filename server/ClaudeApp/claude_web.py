@@ -178,19 +178,31 @@ class WSOut:
 		def on_message(client: dict, server: WebsocketServer, msg):
 			print("recv_text=" + msg)
 			js = json.loads(msg)
-			match js["type"]:
-				case "checkIfLogin":
-					if js["msg"]:
-						self.xoxd.getEnv()
-						self.step = "done"
-					else:
-						self.checkIfLogin(client, server, js)
-				case "sendCode":
-					self.sendCode(client, server, js)
-				case "getTeamList":
-					self.getTeamList(client, server, js)
-				case "selectTeam":
-					self.selectTeam(client, server, js)
+			if js["type"] == "checkIfLogin":
+				if js["msg"]:
+					self.xoxd.getEnv()
+					self.step = "done"
+				else:
+					self.checkIfLogin(client, server, js)
+			elif js["type"] == "sendCode":
+				self.sendCode(client, server, js)
+			elif js["type"] == "getTeamList":
+				self.getTeamList(client, server, js)
+			elif js["type"] == "selectTeam":
+				self.selectTeam(client, server, js)
+			# match js["type"]:
+			# 	case "checkIfLogin":
+			# 		if js["msg"]:
+			# 			self.xoxd.getEnv()
+			# 			self.step = "done"
+			# 		else:
+			# 			self.checkIfLogin(client, server, js)
+			# 	case "sendCode":
+			# 		self.sendCode(client, server, js)
+			# 	case "getTeamList":
+			# 		self.getTeamList(client, server, js)
+			# 	case "selectTeam":
+			# 		self.selectTeam(client, server, js)
 		
 		server = WebsocketServer(host=self.IP_ADDR, port=self.IP_PORT, loglevel=logging.INFO)
 		
