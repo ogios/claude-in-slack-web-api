@@ -8,32 +8,44 @@ import math
 import random
 import time
 import socket
-from threading import Thread
-from typing import TypeVar
-
 import websocket
+import uuid
+import random
+from threading import Thread
 from websocket_server import WebsocketServer, WebSocketHandler
 
 from ClaudeApp import XOXD
-import uuid
 
-# T = TypeVar('T', bound='ClaudeApp')
 PATH = os.path.dirname(__file__)
 with open(PATH + "/../../config.json", "r") as f:
 	HOST = json.loads(f.read())["HOST"]
 
-
-# from WSManager import WSManager
-# logging.basicConfig(filename='./claude.log',
-# 					filemode="a",
-# 					format='%(asctime)s - %(name)s - %(levelname)s - %(message)s-%(funcName)s',
-# 					level=logging.INFO)
 
 def dictToString(cookies: dict):
 	cookie = ""
 	for i in cookies:
 		cookie += f"{i}={cookies[i]}; "
 	return cookie
+
+
+def try_port(port):
+	"""获取可用的端口"""
+	tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	try:
+		tcp.bind(("", port))
+		_, port = tcp.getsockname()
+		tcp.close()
+		return 1
+	except Exception as e:
+		print(e)
+		return 0
+
+
+def getRandomPort():
+	while 1:
+		port = random.randint(49152, 65535)
+		if try_port(port):
+			return port
 
 
 def get_free_tcp_port():
@@ -47,14 +59,14 @@ def get_free_tcp_port():
 
 class WSOut:
 	def __init__(self, xoxd: XOXD, email: str, claudeApp, port: int = None):
-		self.IP_PORT: int = port if port != None else get_free_tcp_port()
-		self.IP_ADDR: str = "0.0.0.0"
+		self.IP_PORT: int = port if port != None else getRandomPort()
+		self.IP_ADDR: str = HOST
 		self.email: str = email
 		self.xoxd: XOXD = xoxd
 		self.claudeApp = claudeApp
 		self.server: WebsocketServer = None
 		self.message_list = []
-
+		
 		self.step = None
 		Thread(target=self._sendMessage, daemon=True).start()
 	
@@ -194,19 +206,20 @@ class WSOut:
 				self.getTeamList(client, server, js)
 			elif js["type"] == "selectTeam":
 				self.selectTeam(client, server, js)
-			# match js["type"]:
-			# 	case "checkIfLogin":
-			# 		if js["msg"]:
-			# 			self.xoxd.getEnv()
-			# 			self.step = "done"
-			# 		else:
-			# 			self.checkIfLogin(client, server, js)
-			# 	case "sendCode":
-			# 		self.sendCode(client, server, js)
-			# 	case "getTeamList":
-			# 		self.getTeamList(client, server, js)
-			# 	case "selectTeam":
-			# 		self.selectTeam(client, server, js)
+		
+		# match js["type"]:
+		# 	case "checkIfLogin":
+		# 		if js["msg"]:
+		# 			self.xoxd.getEnv()
+		# 			self.step = "done"
+		# 		else:
+		# 			self.checkIfLogin(client, server, js)
+		# 	case "sendCode":
+		# 		self.sendCode(client, server, js)
+		# 	case "getTeamList":
+		# 		self.getTeamList(client, server, js)
+		# 	case "selectTeam":
+		# 		self.selectTeam(client, server, js)
 		
 		server = WebsocketServer(host=self.IP_ADDR, port=self.IP_PORT, loglevel=logging.INFO)
 		
@@ -233,11 +246,12 @@ class WSOut:
 			"user": user,
 		}
 		self.message_list.append(json.dumps(data, ensure_ascii=False))
-		# try:
-		# 	self.server.send_message_to_all(json.dumps(data, ensure_ascii=False))
-		# 	return 1
-		# except:
-		# 	return 0
+	
+	# try:
+	# 	self.server.send_message_to_all(json.dumps(data, ensure_ascii=False))
+	# 	return 1
+	# except:
+	# 	return 0
 	
 	def sendError(self, status=None, msg=None):
 		data = {
@@ -246,10 +260,10 @@ class WSOut:
 			"msg": msg,
 		}
 		self.message_list.append(json.dumps(data, ensure_ascii=False))
-		# try:
-		# 	self.server.send_message_to_all(json.dumps(data, ensure_ascii=False))
-		# except:
-		# 	traceback.print_exc()
+	# try:
+	# 	self.server.send_message_to_all(json.dumps(data, ensure_ascii=False))
+	# except:
+	# 	traceback.print_exc()
 
 
 class ClaudeApp:
@@ -403,7 +417,8 @@ class ClaudeApp:
 						if message["app_id"] == self.app_id:
 							status = False
 							check = message["blocks"][0]["elements"][-1]["elements"][-1]
-							if check["text"] != "Typing…" and check["text"] != r"Typing\u2026" and check["text"] != "Typing\u2026":
+							if check["text"] != "Typing…" and check["text"] != r"Typing\u2026" and check[
+								"text"] != "Typing\u2026":
 								status = True
 							self.WSOut.sendMessage(
 								# email=self.email,
@@ -510,14 +525,14 @@ class ClaudeApp:
 			return js
 		else:
 			return 0
-		
+	
 	def checkAuth(self) -> bool:
 		boot_data = self.getBootData()
 		if boot_data["ok"] == False and boot_data.__contains__("error"):
 			return False
 		gc.collect()
 		return True
-		
+	
 	def connect(self) -> int:
 		boot_data = self.getBootData()
 		if boot_data["ok"] == False and boot_data.__contains__("error"):
