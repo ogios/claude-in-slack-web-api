@@ -2,6 +2,11 @@ var chatlog = document.querySelector('#chatlog');
 var chatform = document.querySelector('#chatform');
 var ws = new WebSocket("ws://127.0.0.1:0");
 
+function getAPIUrl(path){
+    let baseurl = $("#baseurl").val()
+    return baseurl + path
+}
+
 function checkEmail(email){
     return !(email === null || !email.includes("@"));
 }
@@ -70,7 +75,7 @@ function Login_callback(data){
 function _Login(data, type, step){
     $.ajax({
         type: "POST",
-        url: "http://127.0.0.1/login?type=" + type + "&step=" + step,
+        url: getAPIUrl("/login?type=" + type + "&step=" + step),
         data: data,
         success: Login_callback,
         contentType: "application/json",
@@ -110,7 +115,7 @@ function Login_sendCode(){
 
 function getTeamList(){
     $.get(
-        "http://127.0.0.1/getTeamList?email=" + getEmail(),
+        getAPIUrl("/getTeamList?email=" + getEmail()),
         (data) => {
             data = JSON.parse(data);
             selectTeam(data);
@@ -156,7 +161,7 @@ function getDAndSave(){
 
 function useEnv(){
     $.get(
-        "http://127.0.0.1:80/env?email=" + getEmail(),
+        getAPIUrl("/env?email=" + getEmail()),
         (data) => {
             data = JSON.parse(data);
             let ok = data.ok;
@@ -176,7 +181,7 @@ function useEnv(){
 
 function connectToWSS(){
     $.get(
-        "http://127.0.0.1/connect?email=" + getEmail(),
+        getAPIUrl("/connect?email=" + getEmail()),
         (data) => {
             data = JSON.parse(data);
             let ok = data.ok;
@@ -208,9 +213,8 @@ function matchStep(next_step){
 }
 
 function checkStatus(email){
-    $.baseURI = "http://127.0.0.1:80"
     $.get(
-        "http://127.0.0.1:80/check?email=" + email,
+        getAPIUrl("/check?email=" + email),
         (data) => {
             data = JSON.parse(data);
             let ok = data.ok;
@@ -274,7 +278,7 @@ chatform.addEventListener('submit', function(event) {
     let message = input.value;
     if (message.trim() === "/reset"){
         $.get(
-            "http://127.0.0.1/execCmd?email=" + getEmail() + "&cmd=" + "/reset",
+            getAPIUrl("/execCmd?email=" + getEmail() + "&cmd=" + "/reset"),
             (data) => {
                 data = JSON.parse(data);
                 if (data.ok === false) alert(data.msg);
@@ -292,7 +296,7 @@ chatform.addEventListener('submit', function(event) {
 
     $.ajax({
         type: "POST",
-        url: "http://127.0.0.1/postMessage",
+        url: getAPIUrl("/postMessage"),
         data: data,
         success: (data) => {
             data = JSON.parse(data);
