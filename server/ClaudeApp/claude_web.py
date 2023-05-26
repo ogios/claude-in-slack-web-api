@@ -1,6 +1,7 @@
 import gc
 import json
 import logging
+import os.path
 import re
 import traceback
 import math
@@ -16,7 +17,10 @@ from websocket_server import WebsocketServer, WebSocketHandler
 from ClaudeApp import XOXD
 import uuid
 
-T = TypeVar('T', bound='ClaudeApp')
+# T = TypeVar('T', bound='ClaudeApp')
+PATH = os.path.dirname(__file__)
+with open(PATH + "/../../config.json", "r") as f:
+	HOST = json.loads(f.read())["HOST"]
 
 
 # from WSManager import WSManager
@@ -44,7 +48,7 @@ def get_free_tcp_port():
 class WSOut:
 	def __init__(self, xoxd: XOXD, email: str, claudeApp, port: int = None):
 		self.IP_PORT: int = port if port != None else get_free_tcp_port()
-		self.IP_ADDR: str = "127.0.0.1"
+		self.IP_ADDR: str = "0.0.0.0"
 		self.email: str = email
 		self.xoxd: XOXD = xoxd
 		self.claudeApp = claudeApp
@@ -531,7 +535,7 @@ class ClaudeApp:
 	def createApp(email, port=None):
 		claude = ClaudeApp(email, port)
 		Thread(target=claude.WSOut.startWebsocketServer, daemon=True).start()
-		url = f"ws://{claude.WSOut.IP_ADDR}:{claude.WSOut.IP_PORT}"
+		url = f"ws://{HOST}:{claude.WSOut.IP_PORT}"
 		return url, claude
 
 

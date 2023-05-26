@@ -1,5 +1,7 @@
+import gc
 import json
 import logging
+import os.path
 from threading import Thread
 import fastapi
 from fastapi import Body, Request
@@ -18,7 +20,7 @@ app.add_middleware(
 	allow_headers=["*"]
 )
 
-sessions: dict[str:dict[str:str, str:ClaudeApp]] = {}
+sessions = {}
 
 
 @app.get("/check")
@@ -192,5 +194,8 @@ async def execCmd(email: str, cmd: str):
 
 if __name__ == "__main__":
 	import uvicorn
-	
-	uvicorn.run(app, host="0.0.0.0", port=80)
+	PATH = os.path.dirname(__file__)
+	with open(PATH + "/../config.json", "r") as f:
+		PORT = json.loads(f.read())["API_PORT"]
+	gc.collect()
+	uvicorn.run(app, host="0.0.0.0", port=PORT)
