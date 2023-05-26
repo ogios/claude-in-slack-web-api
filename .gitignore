@@ -3,15 +3,17 @@
 /gpt/
 /抓包/
 /server/env/
+/server/ClaudeApp/env/
 /server/TestArea/
 /server/__pycache__/
 /server/ClaudeApp/__pycache__/
 
 
+
 # files
 /claude_test.zip
 /gpt.zip
-*.json
+#*.json
 /server/claude(slack_sdk).py
 /server/xoxc请求测试.py
 /server/test.json
