@@ -27,6 +27,7 @@ class XOXD:
 		self.url_redirect = None
 		self.teamlist = None
 		
+		self.error = None
 		self.next_step = "init"
 	
 	def saveEnv(self):
@@ -116,6 +117,8 @@ class XOXD:
 			if "ec" in i:
 				print("done.")
 				return
+		if res.json()['error'] == "expired":
+			self.error = "expired"
 		raise Exception(f"get ec cookie fatal: {self.cookies}\n{res.text}")
 	
 	def getLoginUrl(self):

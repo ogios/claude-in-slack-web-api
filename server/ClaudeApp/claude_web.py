@@ -359,7 +359,7 @@ class ClaudeApp:
 		params = {
 			"_x_id": f"09d906bc-{str(time.time)[:-4]}",
 			"_x_version_ts": int(time.time()),
-			"fp": "30",
+			"fp": "28",
 			"_x_csid": self.sessionID,
 			"slack_route": self.xoxd.teamID,
 			"_x_gantry": "true",
@@ -367,7 +367,7 @@ class ClaudeApp:
 		data = {
 			"token": self.xoxd.api_token,
 			"channel": self.conversaion_id,
-			"limit": 50,
+			"limit": 30,
 			"ignore_replies": True,
 			"include_pin_count": True,
 			"inclusive": True,

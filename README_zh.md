@@ -31,9 +31,17 @@
   "WEB_PORT": nodejs的端口, 默认 80
 }
 ```
+如果你想使用我用vue写的web的话，记得在 `web_vue/claude_vue/config.js` 里修改 `baseurl`
+
+
 运行下面的命令来运行nodejs server
 ```shell
+// static html
 $ node ./web/index.js
+
+// vue3
+$ cd ./web_vue/claude_vue
+$ serve 
 ```
 fastapi:
 ```shell

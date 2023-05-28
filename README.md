@@ -34,9 +34,16 @@ Setup fastapi and nodejs server's host and port in config.json:
   "WEB_PORT": nodejs server's port, default to 80
 }
 ```
+and if you decides to use the vue app in `web_vue/claude_vue` remember to change the `baseurl` in `config.js` 
+
 and run this to start the nodejs server:
 ```shell
+// static html
 $ node ./web/index.js
+
+// vue3
+$ cd ./web_vue/claude_vue
+$ serve 
 ```
 fastapi server:
 ```shell

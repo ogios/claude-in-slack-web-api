@@ -113,6 +113,9 @@ async def login(type: str, step: str, js: dict):
 			data = {"ok": True, "next_step": claude.xoxd.next_step}
 			return json.dumps(data, ensure_ascii=False)
 		else:
+			if claude.xoxd.error == "expired":
+				claude.xoxd.next_step = "init"
+				json.dumps({"ok": False, "msg": "code expired!"}, ensure_ascii=False)
 			return json.dumps({"ok": False, "msg": "Unknown error"}, ensure_ascii=False)
 
 
