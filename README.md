@@ -1,4 +1,4 @@
-# CLaude-in-slack web api
+# CLaude in slack api from slack web
 
 English | [中文](README_zh.md)
 
