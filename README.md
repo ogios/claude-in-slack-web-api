@@ -5,7 +5,7 @@ English | [中文](README_zh.md)
 > Recently I found that claude can not be installed into slack anymore due to high demand.
 > Maybe releasing this script now is a bit late.
 
-After test it for a few times on my server, i've fixed most of the bugs and convert 'match' to 'elif', it now works just fine.
+After several tests on my server, i've fixed most of the bugs and convert 'match' to 'elif', it now works just fine.
 please let me know if there's something wrong on your computer.
 
 This project is for study purposes only, if you just want claude-in-slack's API, then slack_sdk would be a pretty good option.
