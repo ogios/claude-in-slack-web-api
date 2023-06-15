@@ -5,6 +5,8 @@ English | [中文](README_zh.md)
 > Recently I found that claude can not be installed into slack anymore due to high demand.
 > Maybe releasing this script now is a bit late.
 
+**Since the claude will not be available for free slack workspaces, this repo may not be updated anymore**
+
 After several tests on my server, i've fixed most of the bugs and convert 'match' to 'elif', it now works just fine.
 please let me know if there's something wrong on your computer.
 
