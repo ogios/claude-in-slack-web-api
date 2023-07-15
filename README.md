@@ -2,8 +2,7 @@
 
 English | [中文](README_zh.md)
 
-> Recently I found that claude can not be installed into slack anymore due to high demand.
-> Maybe releasing this script now is a bit late.
+> Since claude2 is free to use, this script may not be useful and will not be updated.
 
 **Since the claude will not be available for free slack workspaces, this repo may not be updated anymore**
 
